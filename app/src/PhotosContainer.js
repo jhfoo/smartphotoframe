@@ -21,7 +21,7 @@ export default class PhotosContainer extends React.Component {
   onSelectMenu() {
     var carousel = $('.carousel');
     console.log(carousel.css('zIndex'));
-    if (parseInt(carousel.css('zIndex')) === 100)
+    if (parseInt(carousel.css('zIndex'), 10) === 100)
       carousel.css('zIndex',110);
     else 
       carousel.css('zIndex',100);
@@ -76,7 +76,7 @@ export default class PhotosContainer extends React.Component {
       });
       if (this.state.timer) {
         clearTimeout(this.state.timer);
-        this.state.timer - null;
+        this.state.timer = null;
       }
 
       this.flipPhoto();

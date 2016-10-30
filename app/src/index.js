@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 // import './index.css';
 
-/* global FB */
+/* global FB, Config */
 
   // init fb
 var self = this;
 window.fbAsyncInit = function () {
   FB.init({
-    appId: '1419591801401458',
+    appId: Config.facebook.AppId,
     xfbml: true,
     version: 'v2.8'
   });
