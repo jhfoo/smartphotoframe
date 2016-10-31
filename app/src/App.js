@@ -26,6 +26,7 @@ class App extends Component {
     this.doPromisedFbApiCall = this.doPromisedFbApiCall.bind(this);
     this.onSelectAlbum = this.onSelectAlbum.bind(this);
     this.onSelectAlbums = this.onSelectAlbums.bind(this);
+    this.removePermissions = this.removePermissions.bind(this);
 
     this.state = {
       UserId: '',
@@ -37,10 +38,18 @@ class App extends Component {
     };
   }
 
-  doPromisedFbApiCall(url, ApiParams) {
+  removePermissions() {
+    this.doPromisedFbApiCall('/me/permissions', 'delete')
+    .then((resp) => {
+      // TODO: error handling from resp
+      this.resetState();
+    });
+  }
+
+  doPromisedFbApiCall(url, method, ApiParams) {
     console.log('Fb API call: ' + url);
     return new Promise((resolve, reject) => {
-      FB.api(url, ApiParams, function(resp) {
+      FB.api(url, method, ApiParams, function(resp) {
         if (!resp && resp.error)
           reject(resp.error);
         else {
@@ -56,7 +65,7 @@ class App extends Component {
     var self = this;
     console.log('onSelectAlbum()');
     var url = '/' + AlbumId + '/photos';
-    this.doPromisedFbApiCall(url, {
+    this.doPromisedFbApiCall(url, 'get', {
       fields: 'created_time, name, link, from, images'
     })
     .then((resp) => {
@@ -90,18 +99,23 @@ class App extends Component {
       });
     }
   }
+
+  resetState() {
+    this.setState({
+      UserId: '',
+      UserName: 'Guest',
+      photos: [],
+      albums: []
+    });
+  }
+
   onLogout() {
     var self = this;
     FB.logout((resp) => {
       console.log('onLogout() resp');
       console.log(resp);
       if (resp && !resp.error) 
-        self.setState({
-          UserId: '',
-          UserName: 'Guest',
-          photos: [],
-          albums: []
-        });
+        this.resetState();
     });
   }
 
@@ -124,7 +138,7 @@ class App extends Component {
     });
     $('.carousel div').stop (true, false);
 
-    this.doPromisedFbApiCall('/me/albums', {
+    this.doPromisedFbApiCall('/me/albums', 'get', {
       fields: 'updated_time, created_time, name, count'
     })
     .then((resp) => {
@@ -145,7 +159,7 @@ class App extends Component {
       console.log('getPromisedFbLogin() resp:');
       console.log(resp);
       if (resp.status === 'connected') {
-        return this.doPromisedFbApiCall('/me', {fields:'last_name, first_name'});
+        return this.doPromisedFbApiCall('/me', 'get', {fields:'last_name, first_name'});
       } else {
         throw new Error(resp);
       }
@@ -166,7 +180,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header UserId={this.state.UserId} UserName={this.state.UserName} onSelectAlbums={this.onSelectAlbums} onLogout={this.onLogout}/>      
+        <Header UserId={this.state.UserId} 
+          UserName={this.state.UserName} 
+          onSelectAlbums={this.onSelectAlbums} 
+          onLogout={this.onLogout}
+          onRemovePermissions={this.removePermissions}/>      
         <PhotosContainer photos={this.state.photos} isShowPhotos={this.state.isShowPhotos} />
         <LoginContainer UserId={this.state.UserId} onLogin={this.onLogin}/>
         <AlbumsContainer albums={this.state.albums} onSelectAlbum={this.onSelectAlbum}/>

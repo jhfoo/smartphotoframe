@@ -8,10 +8,15 @@ export default class Header extends React.Component {
     else
       document.body.webkitRequestFullScreen();
   }
+
   render() {
     var LogoutBtn = this.props.UserId === '' 
       ? ''
       : <a onClick={() => {this.props.onLogout()}} className="item"><i className="sign out icon"></i>Log Out</a>;
+
+    var RemoveBtn = this.props.UserId === '' 
+      ? ''
+      : <a onClick={() => {this.props.onRemovePermissions()}} className="item"><i className="remove icon"></i>Remove Permissions</a>;
 
     var LoginMenu = null;
     if (this.props.UserId != '') {
@@ -27,6 +32,7 @@ export default class Header extends React.Component {
         <a onClick={() => {this.onToggleFullScreen()}} className="item"><i className="tv icon"></i> Full Screen</a>
         <div className="right menu">
           <a className="item"><i className="user icon"></i>{this.props.UserName}</a>
+          {RemoveBtn}
           {LogoutBtn}
         </div>
       </div>

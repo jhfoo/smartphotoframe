@@ -93,13 +93,6 @@ export default class LoginContainer extends React.Component {
     this.flipBgPhoto();
   }
 
-  onToggleFaq() {
-    if ($('#ToggleFaq').css('display') === 'block')
-      $('#ToggleFaq').css('display','none');
-    else
-      $('#ToggleFaq').css('display','block');
-  }
-
   renderMainSegment() {
     var TextStyle = {
       textAlign: 'left',
@@ -121,24 +114,12 @@ export default class LoginContainer extends React.Component {
             information nor your selection preferences are stored in the server.</p>
             <strong>I don't believe you. Show me your codes!</strong>
             <p>Check them out <a href="https://github.com/jhfoo/smartphotoframe">on GitHub</a>!</p>
-            <strong>Tell me more about why and how you did this.</strong>
-            <p>I'm glad you asked! <a onClick={() => {this.onToggleFaq()}}>Click here</a> to see more.</p>
-            <div id="ToggleFaq" style={{display:'none'}}>
-              <strong>What tech did you employ in this?</strong>
-              <p>2 main tech: <a href="https://facebook.github.io/react/">React</a> and&nbsp; 
-              <a href="https://developers.facebook.com/docs/javascript">Facebook SDK for 
-              JavaScript</a>. UI framework is stock <a href="http://semantic-ui.com/">Semantic UI</a></p>
-              <strong>What browsers are supported?</strong>
-              <p>React code was written in es2016, without much regard for legacy support. There are 
-              some browser-specific codes (eg. full screen toggle) which have equivalents for FireFox
-              and IE. Support for them is just not prioritised at this iteration.</p>
-            </div>
           </div>
           <div className="six wide column">
               Identify yourself<br/><br/>
               <a onClick={()=>{this.props.onLogin()}} className="fluid ui primary button"><i className="facebook icon"></i> Facebook Login</a>
               <br/><br/>
-              <div id="status">There's only one way to login.</div>
+              <div id="status">No registration required.</div>
           </div>
         </div>
       </div>
