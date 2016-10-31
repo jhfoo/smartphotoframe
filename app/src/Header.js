@@ -16,7 +16,7 @@ export default class Header extends React.Component {
     var LoginMenu = null;
     if (this.props.UserId != '') {
       LoginMenu = (
-        <a onClick={() => {this.props.onSelectAlbums()}} className="item">Albums</a>
+        <a onClick={() => {this.props.onSelectAlbums()}} className="item"><i className="book icon"></i> Albums</a>
       );
     }
 
@@ -24,7 +24,7 @@ export default class Header extends React.Component {
       <div className="ui top fixed inverted menu">
         <div className="item">SmartPhotoFrame</div>
         {LoginMenu}
-        <a onClick={() => {this.onToggleFullScreen()}} className="item">Full Screen</a>
+        <a onClick={() => {this.onToggleFullScreen()}} className="item"><i className="tv icon"></i> Full Screen</a>
         <div className="right menu">
           <a className="item"><i className="user icon"></i>{this.props.UserName}</a>
           {LogoutBtn}

@@ -103,8 +103,9 @@ export default class LoginContainer extends React.Component {
   renderMainSegment() {
     var TextStyle = {
       textAlign: 'left',
-      maxHeight: '350px',
-      overflow: 'auto'
+      overflow: 'auto',
+      borderRight: 'solid 1px #eee',
+      paddingRight: '1rem'
     };
 
     return (
@@ -164,6 +165,8 @@ export default class LoginContainer extends React.Component {
       top: 0,
       left: 0,
       opacity: 0
+    }, SegmentStyle = {
+      maxWidth: '600px'
     };
 
     if (this.props.UserId !== '') {
@@ -177,16 +180,15 @@ export default class LoginContainer extends React.Component {
         <div style={ContentStyle}>
           <div className="ui container">
             <div className="ui grid">
-              <div className="four wide column"></div>
+              <div className="five wide column"></div>
               <div className="eleven wide column">
                 <br/>
-                <div className="ui raised segments">
+                <div style={SegmentStyle} className="ui raised segments">
                   {this.renderMainSegment()}
                   <div className="ui right aligned inverted tertiary segment">
                     Photos from <a href="https://www.pexels.com">Pexels</a>
                   </div>
                 </div>
-                <div className="one wide column"></div>
               </div>
             </div>
           </div>
