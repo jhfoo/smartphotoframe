@@ -1,15 +1,14 @@
 # core
 import json
-from pathlib import Path
 import time
+from pathlib import Path
 
+# custom
+from config import Config
 
 # community
 from fastapi import APIRouter
 from fastapi.responses import FileResponse
-
-# custom
-from config import Config
 from synology.album import Album
 from synology.auth import Auth
 from synology.photo import Photo
@@ -20,6 +19,11 @@ USERNAME = 'jhfoo'
 PASSWORD = '1Luvlisa!'
 
 router = APIRouter(prefix='/smartphotoframe')
+
+
+def autoCreateCacheFolder():
+  if not Path('cache').exists():
+    Path('cache').mkdir()
 
 
 def getSessionId():
@@ -54,6 +58,8 @@ def initSetting(AlbumId: int):
 
 @router.get('/album/list')
 def getAlbums():
+  autoCreateCacheFolder()
+
   fname = 'cache/album.list.json'
   MaxAgeSec = 5 * 60
 
@@ -74,6 +80,8 @@ def getAlbums():
 
 @router.get('/photo/{PhotoId}/cache/{CacheKey}/UserId/{UserId}')
 def getPhotoThumbnail(PhotoId: int, CacheKey: str, UserId: int):
+  autoCreateCacheFolder()
+
   fname = f'cache/photo.{PhotoId}.jpg'
   if Path(fname).exists():
     return FileResponse(fname)
@@ -90,6 +98,8 @@ def getPhotoThumbnail(PhotoId: int, CacheKey: str, UserId: int):
 
 @router.get('/album/{AlbumId}/photos')
 def getAlbumPhotos(AlbumId: int):
+  autoCreateCacheFolder()
+
   fname = f'cache/album.{AlbumId}.photos.json'
   print(f'cache: {fname}')
   MaxAgeSec = 5 * 60
