@@ -1,2 +1,3 @@
-podman run -it --rm \
+SUDO=sudo
+$SUDO podman run -it --rm \
   smartphotoframe/server /bin/sh
