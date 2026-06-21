@@ -1,3 +1,11 @@
+PYTHON=python3
+
+if [ "$(uname)" = "FreeBSD" ]; then
+  echo "This is FreeBSD."
+  PYTHON=python3.12
+fi
+
+
 rm -rf venv
-python3 -m venv venv
+$PYTHON -m venv venv
 ./venv/bin/pip3 install -r conf/requirements.txt
