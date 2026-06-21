@@ -5,6 +5,6 @@ RUN pkg install -y python312 zsh
 
 WORKDIR /app
 COPY . .
-RUN bin/setup
+RUN /usr/local/bin/zsh -c bin/setup
 
 ENTRYPOINT ["/usr/local/bin/zsh", "-c", "bin/prod"]
