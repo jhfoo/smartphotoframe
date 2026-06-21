@@ -1,3 +1,7 @@
+# cd to the parent folder of script
+cd "$(dirname -- "$(readlink -f "${0:A}")")/.."
+
+
 PYTHON=python3
 SUDO=sudo
 

@@ -1,0 +1,3 @@
+sudo podman build -t smartphotoframe/server \
+  -v /var/cache/pkg:/var/cache/pkg \
+  -f Containerfile

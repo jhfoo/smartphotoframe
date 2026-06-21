@@ -1,0 +1,10 @@
+FROM forgejo.kungfoo.local/jhfoo/freebsd-base-custom-amd64:15.0
+
+RUN env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
+RUN pkg install -y python312
+
+WORKDIR /app
+COPY . .
+RUN bin/setup
+
+CMD ["bin/prod"]
