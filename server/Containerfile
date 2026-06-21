@@ -1,10 +1,10 @@
 FROM forgejo.kungfoo.local/jhfoo/freebsd-base-custom-amd64:15.0
 
 RUN env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
-RUN pkg install -y python312
+RUN pkg install -y python312 zsh
 
 WORKDIR /app
 COPY . .
 RUN bin/setup
 
-ENTRYPOINT ["bin/prod"]
+ENTRYPOINT ["/usr/local/bin/zsh", "-c", "bin/prod"]
