@@ -7,4 +7,4 @@ WORKDIR /app
 COPY . .
 RUN bin/setup
 
-CMD ["bin/prod"]
+ENTRYPOINT ["bin/prod"]
