@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <div>Quasar App</div>
+        <div>SMARTPhotoFrame</div>
         <q-space />
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>

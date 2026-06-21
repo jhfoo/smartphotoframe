@@ -3,9 +3,6 @@ import json
 import time
 from pathlib import Path
 
-# custom
-from config import Config
-
 # community
 from fastapi import APIRouter
 from fastapi.responses import FileResponse
@@ -13,12 +10,16 @@ from synology.album import Album
 from synology.auth import Auth
 from synology.photo import Photo
 
+# custom
+from config import Config
+from secret import Secret
+
 NAS_IP = 'chie.kungfoo.local'  # Replace with your NAS IP
 NAS_PORT = 5000  # Default HTTP port (use 5001 for HTTPS)
-USERNAME = 'jhfoo'
-PASSWORD = '1Luvlisa!'
 
 router = APIRouter(prefix='/smartphotoframe')
+
+SynologySecret = Secret('jhfoo/chie')
 
 
 def autoCreateCacheFolder():
@@ -27,9 +28,11 @@ def autoCreateCacheFolder():
 
 
 def getSessionId():
-  global NAS_IP, NAS_PORT, USERNAME, PASSWORD
+  global NAS_IP, NAS_PORT, SynologySecret
 
-  token = Auth.getToken(NAS_IP, NAS_PORT, USERNAME, PASSWORD)
+  token = Auth.getToken(
+    NAS_IP, NAS_PORT, SynologySecret.data['UserId'], SynologySecret.data['passwd']
+  )
   if 'data' not in token or 'sid' not in token['data']:
     raise Exception('SessionId is None')
 

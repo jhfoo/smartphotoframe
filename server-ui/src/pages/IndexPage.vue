@@ -78,6 +78,7 @@ import axios from "axios";
 // https://fastly.picsum.photos/id/638/1920/1080.jpg?hmac=NAOd23VbjYey0n--NRzGkAdDkC1xF2c-RM21RQi552k
 const PhotoUrl = ref("");
 const now = ref(dayjs());
+const isDark = ref(false);
 const AlbumName = ref("");
 const DialogMessage = ref("");
 const isShowDialog = ref(false);
@@ -87,10 +88,14 @@ var ImageId = null;
 
 setInterval(() => {
   now.value = dayjs();
+  if (now.value.hour() > 23 || now.value.hour() < 7) {
+    isDark.value = true;
+  } else {
+    isDark.value = false;
+  }
 }, 5 * 1000);
 
-const isDark = ref(false);
-isDark.value = false;
+isDark.value = true;
 
 const BaseUrl = "http://192.168.0.75:8000";
 var DefaultAlbum = null;

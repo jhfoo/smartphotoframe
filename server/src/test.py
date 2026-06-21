@@ -5,6 +5,7 @@ import json
 from synology.album import Album
 from synology.auth import Auth
 from synology.photo import Photo
+from secret import Secret
 
 NAS_IP = 'chie.kungfoo.local'  # Replace with your NAS IP
 NAS_PORT = '5000'  # Default HTTP port (use 5001 for HTTPS)
@@ -38,4 +39,6 @@ def main():
 
 
 if __name__ == '__main__':
-  main()
+  secret = Secret('jhfoo/chie')
+  print(json.dumps(secret.data, indent=2))
+  # main()
