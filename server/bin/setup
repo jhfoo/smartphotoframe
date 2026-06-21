@@ -1,8 +1,10 @@
 PYTHON=python3
+SUDO=sudo
 
 if [ "$(uname)" = "FreeBSD" ]; then
   echo "This is FreeBSD."
   PYTHON=python3.12
+  $SUDO pkg install -y rust
 fi
 
 
