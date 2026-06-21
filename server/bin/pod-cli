@@ -1,0 +1,2 @@
+podman run -it --rm \
+  smartphotoframe/server /bin/sh
