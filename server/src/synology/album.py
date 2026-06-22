@@ -11,7 +11,7 @@ class Album:
     pass
 
   @classmethod
-  def getAll(cls, SessionId) -> list:
+  def getAll(cls, SessionId, offset: int = 0) -> list:
     try:
       # 2. List the Albums
       # The query uses 'SYNO.Foto.Browse.Album' for Synology Photos (DSM 7+)
@@ -21,7 +21,7 @@ class Album:
         'version': '1',
         'method': 'list',
         'limit': '100',  # Max number of albums to return per request
-        'offset': '0',
+        'offset': offset,
         'status': '["normal"]',  # Retrieves normal user-created albums
         '_sid': SessionId,
       }
@@ -47,12 +47,12 @@ class Album:
       return []
 
   @classmethod
-  def getPhotos(cls, SessionId, AlbumId: int):
+  def getPhotos(cls, SessionId, AlbumId: int, offset: int = 0):
     payload = {
       'api': 'SYNO.Foto.Browse.Item',
       'version': '1',
       'method': 'list',
-      'offset': 0,
+      'offset': offset,
       'limit': 100,  # Increase limit if your album has more items
       'album_id': AlbumId,
       'additional': '["thumbnail"]',
@@ -66,6 +66,8 @@ class Album:
       return
 
     photos = response['data']['list']
+    if len(photos) == 100:
+      return photos + cls.getPhotos(SessionId, AlbumId, offset + 100)
     return photos
     # print(f"\n--- Found {len(photos)} photos inside the album ---")
     # for photo in photos:

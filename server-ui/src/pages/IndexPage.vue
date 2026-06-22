@@ -88,7 +88,7 @@ var ImageId = null;
 
 setInterval(() => {
   now.value = dayjs();
-  if (now.value.hour() > 23 || now.value.hour() < 7) {
+  if (now.value.hour() > 21 || now.value.hour() < 7) {
     isDark.value = true;
   } else {
     isDark.value = false;
@@ -205,7 +205,7 @@ function ImageLoadError() {
 
 <style>
 .grayscale {
-  filter: grayscale(100%) brightness(50%);
+  filter: grayscale(100%) brightness(30%);
 }
 .card-bg-dark {
   background-color: rgba(0, 0, 0, 0.5);
